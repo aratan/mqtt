@@ -6,8 +6,10 @@ var client = mqtt.connect("ws://test.mosquitto.org:8080/mqtt");
 var client = mqtt.connect("wss://test.mosquitto.org:8081/mqtts")
 function EventoConectar() {
   console.log("Conectado a MQTT");
-  client.subscribe("ALSW/#", function (err) {
+  //lectura
+  client.subscribe("shellypro3em-08f9e0eb4dd0/status/em:0", function (err) {
     if (!err) {
+    //envio
       client.publish("ALSW/Temperatura", "1976");
     }
   });
@@ -18,7 +20,8 @@ function EventoMensaje(topic, message) {
     console.log("La Temperatura es " + message.toString());
   }
   console.log(topic + " - " + message.toString());
-  // client.end()
+  document.getElementById("app").innerHTML=message.toString()
+  // client.end() 
 }
 
 client.on("connect", EventoConectar);
